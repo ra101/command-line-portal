@@ -1,36 +1,39 @@
 <head>
+  <title>
+    〈 RA 〉's CLI!  
+  </title>
     <link rel="stylesheet/less" type="text/css" href="styles/main.less" />
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/less.js/2.7.2/less.js"></script>
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js"></script>
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery.terminal/1.4.3/js/jquery.terminal.js"></script>
-    <script type="text/javascript" src="src/shell.js"></script>
-    <script type="text/javascript" src="src/cli.js"></script>
+
   </head>
   
-  <body>
-  
+  <body bgcolor="black" style="overflow: hidden;">
+    <div id="virtual"></div>
+    <div id="universe"></div>
   <div class="terminal-window">
     <header>
-      <div class="button red"></div>
-      <div class="button yellow"></div>
-      <div class="button green"></div>
+      <span class="terminal-title">🕸️ https://ra101.github.io/cli/</span>
+      <span class="button yellow"></span>
+      <span class="button green"></span>
+      <span class="button red"></span>
+
     </header>
     <div id="terminal">
-      <p><span class="green">\[._.]/</span> - you're in codebytere's cli! type `help` to get started.</p>
+      <p><b><span class="green-glow">(^‿^)/</span> - You're in 〈 RA 〉's CLI!✨ Type `help` to get started.😇</b></p>
         <p class="hidden">
           <span class="prompt">
-            <span class="root">root</span>
-            <span class="tick">❯</span>
+            <span class="root">~</span>
+            <span class="tick">$</span>
           </span>
           <span contenteditable="true" class="input"></span>
         </p>
     </div>
-  </div>
-  
-  <div class="footer">
-    <p>© Shelley Vohr 2020</p>
-    <p> Made with ❤ and coffee</p>
-    <p>Site code can be found <a class="site-code" target="_blank" href="https://github.com/codebytere/codebytere.github.io">here</a></p>
-  </div>
-  
+
+</div>
+
+  <script type="text/javascript" src="src/bg.js"></script>
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/less.js/2.7.2/less.js"></script>
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js"></script>
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery.terminal/1.4.3/js/jquery.terminal.js"></script>
+  <script type="text/javascript" src="src/shell.js"></script>
+  <script type="text/javascript" src="src/cli.js"></script>
   </body>

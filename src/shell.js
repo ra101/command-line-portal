@@ -90,14 +90,22 @@ class Shell {
         const cmd = input[0].toLowerCase();
         const args = input[1];
 
-        if (cmd === 'clear') {
+        if (cmd === 'clear' || cmd === 'cls') {
           this.updateHistory(cmd);
           this.clearConsole();
-        } else if (cmd && cmd in this.commands) {
+        } else if (cmd == 'cd..' && args == null) {
+          this.runCommand('cd', '..');
+          this.resetPrompt(term, prompt);
+          $('.root').last().html(localStorage.directory == "root" ? "~" : "~/skills");
+        }
+        else if (cmd && cmd in this.commands) {
           this.runCommand(cmd, args);
           this.resetPrompt(term, prompt);
-          $('.root').last().html(localStorage.directory);
-        } else {
+          $('.root').last().html(localStorage.directory == "root" ? "~" : "~/skills");
+        } else if (input == '') {
+          this.resetPrompt(term, prompt);
+        }
+        else {
           this.term.innerHTML += 'Error: command not recognized';
           this.resetPrompt(term, prompt);
         }
@@ -114,6 +122,9 @@ class Shell {
     if (output) {
       this.term.innerHTML += output;
     }
+    $('pre#pre-ra').on("animationend", function () {
+      $(this).removeClass('fade-in');
+    });
   }
 
   resetPrompt(term, prompt) {
@@ -123,6 +134,7 @@ class Shell {
     if (this.prompt) {
       newPrompt.querySelector('.prompt').textContent = this.prompt;
     }
+    console.log(term)
 
     term.appendChild(newPrompt);
     newPrompt.querySelector('.input').innerHTML = '';
@@ -155,7 +167,7 @@ class Shell {
 
   clearConsole() {
     const getDirectory = () => localStorage.directory;
-    const dir = getDirectory();
+    const dir = getDirectory() == "root" ? "~" : "~/skills";
 
     $('#terminal').html(
       `<p class="hidden">

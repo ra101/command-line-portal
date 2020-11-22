@@ -1,4 +1,13 @@
 /* global $, localStorage, Shell */
+let ipAddr = "127.0.0.1"
+$(function () {
+  $.getJSON("https://api.ipify.org?format=jsonp&callback=?",
+    function (json) {
+      ipAddr = json.ip;
+      rootPath = 'ra101/users/' + ipAddr;
+    }
+  );
+});
 
 const errors = {
   invalidDirectory: 'Error: not a valid directory',
@@ -9,13 +18,14 @@ const errors = {
 };
 
 const struct = {
-  root: ['about', 'resume', 'contact', 'talks'],
-  skills: ['proficient', 'familiar'],
+  root: ['about', 'resume', 'contact'],
+  skills: ['languages', 'frameworks', 'databases', 'tools', 'others'],
 };
 
 const commands = {};
 let systemData = {};
-const rootPath = 'users/codebytere/root';
+const title = ["🕸️ https://ra101.github.io/cli/", "🕸️ ra101://cli"];
+let rootPath = 'ra101/users/127.0.0.1';
 
 const getDirectory = () => localStorage.directory;
 const setDirectory = (dir) => {
@@ -25,25 +35,36 @@ const setDirectory = (dir) => {
 // Turn on fullscreen.
 const registerFullscreenToggle = () => {
   $('.button.green').click(() => {
+    $('.terminal-window').removeClass('minimized');
     $('.terminal-window').toggleClass('fullscreen');
+    $('.terminal-title').html(title[0])
   });
 };
 const registerMinimizedToggle = () => {
   $('.button.yellow').click(() => {
+    $('.terminal-window').removeClass('fullscreen');
     $('.terminal-window').toggleClass('minimized');
+    let flag = $('.terminal-window').hasClass('minimized') ? 1 : 0;;
+    $('.terminal-title').html(title[flag]);
   });
 };
 
-// Create new directory in current directory.
+const registerCross = () => {
+  $('.button.red').click(() => {
+    $(location).attr('href', 'http://ra101.github.io');
+  });
+};
+
+// noWriteAccess commands.
 commands.mkdir = () => errors.noWriteAccess;
-
-// Create new directory in current directory.
 commands.touch = () => errors.noWriteAccess;
-
-// Remove file from current directory.
 commands.rm = () => errors.noWriteAccess;
+commands.rmdir = () => errors.noWriteAccess;
+commands.cp = () => errors.noWriteAccess;
+commands.mv = () => errors.noWriteAccess;
+commands.chmod = () => errors.noWriteAccess;
+commands.chown = () => errors.noWriteAccess;
 
-// View contents of specified directory.
 commands.ls = (directory) => {
   console.log(systemData);
   if (directory === '..' || directory === '~') {
@@ -57,11 +78,38 @@ commands.ls = (directory) => {
   return systemData[getDirectory()];
 };
 
+commands.dir = commands.ls
+
 // View list of possible commands.
 commands.help = () => systemData.help;
+commands.all_commands = () => systemData.all_commands;
+
+// A simple Echo.
+commands.echo = (sampleText) => { return sampleText };
+commands.printf = commands.echo
+
+
+// Few additionals.
+commands.hostname = () => { return ipAddr };
+commands.uname = () => {
+  if (navigator.userAgent.indexOf("Chrome") > -1) {
+    return "V8"
+  } else if (navigator.userAgent.indexOf("WebKit") > -1) {
+    return "JavaScriptCore"
+  } else {
+    return "SpiderMonkey"
+  }
+}
+
+// Glowing 〈 RA 〉 text
+commands.ra = () => systemData.ra;
+commands.ra101 = commands.ra
+
+// a lil codebytere tribute
+commands.codebytere = () => systemData.codebytere;
 
 // Display current path.
-commands.path = () => {
+commands.pwd = () => {
   const dir = getDirectory();
   return dir === 'root' ? rootPath : `${rootPath}/${dir}`;
 };
@@ -128,46 +176,69 @@ commands.cat = (filename) => {
   return errors.fileNotFound;
 };
 
+//shutdown command
+commands.quit = commands.shutdown = commands.exit = () => { $(location).attr('href', 'http://ra101.github.io'); }
+
+//restart command
+commands.reboot = commands.restart = commands.reload = () => { location.reload(); }
+
+
 // Initialize cli.
 $(() => {
   registerFullscreenToggle();
   registerMinimizedToggle();
+  registerCross();
   const cmd = document.getElementById('terminal');
 
   $.ajaxSetup({ cache: false });
   const pages = [];
   pages.push($.get('pages/about.html'));
   pages.push($.get('pages/contact.html'));
-  pages.push($.get('pages/familiar.html'));
   pages.push($.get('pages/help.html'));
-  pages.push($.get('pages/proficient.html'));
+  pages.push($.get('pages/all_commands.html'));
+  pages.push($.get('pages/ra.html'));
+  pages.push($.get('pages/codebytere.html'));
   pages.push($.get('pages/resume.html'));
   pages.push($.get('pages/root.html'));
   pages.push($.get('pages/skills.html'));
-  pages.push($.get('pages/talks.html'));
+  pages.push($.get('pages/languages.html'));
+  pages.push($.get('pages/frameworks.html'));
+  pages.push($.get('pages/databases.html'));
+  pages.push($.get('pages/tools.html'));
+  pages.push($.get('pages/others.html'));
   $.when
     .apply($, pages)
     .done(
       (
         aboutData,
         contactData,
-        familiarData,
         helpData,
-        proficientData,
+        all_commandsData,
+        raData,
+        codebytereData,
         resumeData,
         rootData,
         skillsData,
-        talksData,
+        languagesData,
+        frameworksData,
+        databasesData,
+        toolsData,
+        othersData,
       ) => {
         systemData['about'] = aboutData[0];
         systemData['contact'] = contactData[0];
-        systemData['familiar'] = familiarData[0];
         systemData['help'] = helpData[0];
-        systemData['proficient'] = proficientData[0];
+        systemData['all_commands'] = all_commandsData[0]
+        systemData['ra'] = raData[0];
+        systemData['codebytere'] = codebytereData[0];
         systemData['resume'] = resumeData[0];
         systemData['root'] = rootData[0];
         systemData['skills'] = skillsData[0];
-        systemData['talks'] = talksData[0];
+        systemData['languages'] = languagesData[0];
+        systemData['frameworks'] = frameworksData[0];
+        systemData['databases'] = databasesData[0];
+        systemData['tools'] = toolsData[0];
+        systemData['others'] = othersData[0];
       },
     );
 

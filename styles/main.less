@@ -1,19 +1,16 @@
 @font-family: Menlo, Monaco, "Consolas", "Courier New", "Courier";
 
-body {
-  background-color: #211E3A;
-}
 
 .terminal-window {
   text-align: left;
   width: 600px;
   height: 360px;
   border-radius: 10px;
-  margin: auto;
-  position: relative;
+  position: absolute;
   display: block;
-  top: 25vh;
-  transition: all 0.5s ease;
+  top: 20vh;
+  left: ~"calc(50vw - 300px)";
+  transition: all 0.25s ease;
 
   &.minimized {
     height: 30px;
@@ -30,31 +27,40 @@ body {
   }
 
   header {
-    background: #e0e8f0;
+    background: dimgrey;
     height: 30px;
     border-radius: 8px 8px 0 0;
     padding-left: 10px;
+    text-align: right;
+
+    .terminal-title {
+      float: left;
+      margin: 4px 2px 0 0;      
+      color: #e8e8e8;
+      font-weight: lighter;
+      font-family: @font-family;
+      font-size: 12pt;  
+    }
 
     .button {
       width: 12px;
       height: 12px;
-      margin: 10px 4px 0 0;
+      margin: 10px 5px 0 0;
       display: inline-block;
-      border-radius: 8px;
+      border-radius: 50%;
+      cursor: pointer;
     }
 
     .button.green {
-      background: #3bb662;
-      cursor: pointer;
+      background: chartreuse;
     }
 
     .button.yellow {
-      background: #e5c30f;
-      cursor: pointer;
+      background: gold;
     }
 
     .button.red {
-      background: #e75448;
+      background: red;
     }
   }
 
@@ -62,7 +68,7 @@ body {
     color: white;
     font-family: @font-family;
     font-size: 11pt;
-    background: #30353a;
+    background: #121212ab;
     padding: 10px;
     box-sizing: border-box;
     position: absolute;
@@ -74,7 +80,10 @@ body {
 
   .contact {
     list-style: none;
-    margin-left: -30px;
+    text-align: center;
+    li {
+      padding: 2px;
+    }
   }
 
   h4 {
@@ -83,7 +92,7 @@ body {
 
   a {
     text-align: center;
-    display: block;
+    display: inline;
   }
 
   .input {
@@ -93,7 +102,7 @@ body {
   }
 
   .root {
-    color: #95F584;
+    color: #25e21f;
   }
 
   .tick {
@@ -101,7 +110,7 @@ body {
   }
 
   .blue {
-    color: lightblue;
+    color: deepskyblue;
   }
 
   .gray {
@@ -109,11 +118,12 @@ body {
   }
 
   .dir {
-    color: #88DEF2;
-  }
+    color: dodgerblue;
+    }
 
-  .green {
-    color: green;
+  .green-glow {
+    color: chartreuse;
+    text-shadow: 0 0 4px green;
   }
 }
 
@@ -124,22 +134,72 @@ body {
   color: white;
 }
 
-.footer {
-  position: absolute;
-  bottom: 40px;
-  left: 0;
-  right: 0;
-  text-align: center;
-  line-height: 0.1px;
-  color: white;
-  font-family: @font-family;
+.terminal-data {
+  display: none;
+}
 
-  .site-code {
-    font-weight: bold;
-    color: lightblue;
+div#universe {
+  display: block;
+  height: 100%;
+  margin: 0;
+  background: radial-gradient(
+    ellipse at center,
+    #1d001d 0%,
+    #0e000e 30%,
+    #000000 70%
+  );
+}
+
+div.dot {
+  display: block;
+  position: absolute;
+  color: #ff9eff;
+  -webkit-user-select: none;  
+  -moz-user-select: none;    
+  -ms-user-select: none;      
+  user-select: none;
+}
+
+
+div.number {
+  writing-mode: vertical-rl;
+  font-size: 24px;
+  color: #008f11;
+  font-family: "Courier New", Courier, monospace;
+  text-orientation: upright;
+  font-weight: bold;
+  position: absolute;
+  top: 0px;
+  animation: updown 1000ms infinite;
+  -webkit-user-select: none;  
+  -moz-user-select: none;    
+  -ms-user-select: none;      
+  user-select: none;
+}
+
+
+@media only screen and (max-width: 1000px) {
+  div#universe {
+    display: block;
+    background: radial-gradient(
+      circle at center,
+      #1d001d 0%,
+      #0e000e 30%,
+      #000000 70%
+    );
+  }
+ 
+}
+
+@keyframes twinkle {
+  50% {
+    transform: scale(0.3);
+    opacity: 0.3;
   }
 }
 
-.terminal-data {
-  display: none;
+@keyframes updown {
+  50% {
+    transform: translate(0, 4px);
+  }
 }
