@@ -96,12 +96,12 @@ class Shell {
         } else if (cmd == 'cd..' && args == null) {
           this.runCommand('cd', '..');
           this.resetPrompt(term, prompt);
-          $('.root').last().html(localStorage.directory == "root" ? "~" : "~/skills");
+          $('.root').last().html(localStorage.directory == "root" ? "~" : localStorage.directory);
         }
         else if (cmd && cmd in this.commands) {
           this.runCommand(cmd, args);
           this.resetPrompt(term, prompt);
-          $('.root').last().html(localStorage.directory == "root" ? "~" : "~/skills");
+          $('.root').last().html(localStorage.directory == "root" ? "~" : localStorage.directory);
         } else if (input == '') {
           this.resetPrompt(term, prompt);
         }
@@ -167,7 +167,7 @@ class Shell {
 
   clearConsole() {
     const getDirectory = () => localStorage.directory;
-    const dir = getDirectory() == "root" ? "~" : "~/skills";
+    const dir = getDirectory() == "root" ? "~" : getDirectory();
 
     $('#terminal').html(
       `<p class="hidden">
