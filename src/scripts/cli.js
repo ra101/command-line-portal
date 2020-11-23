@@ -176,6 +176,9 @@ commands.cat = (filename) => {
   return errors.fileNotFound;
 };
 
+//source code
+commands.source_code = () => { window.open("https://github.com/ra101/" + location.href.split('/')[3], "_blank"); }
+
 //shutdown command
 commands.quit = commands.shutdown = commands.exit = () => { $(location).attr('href', 'http://ra101.github.io'); }
 
