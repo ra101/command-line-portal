@@ -1,5 +1,5 @@
-## 〈 RA 〉's CLI! 
+## 〈 RA 〉's Console! 
 
-An interactive `cli ` that allows you to learn about me by navigating around a terminal emulator.
+An interactive `console` that allows you to learn about me by navigating around a terminal emulator.
 
 Built with JavaScript & less.

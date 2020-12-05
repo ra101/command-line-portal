@@ -24,7 +24,7 @@ const struct = {
 
 const commands = {};
 let systemData = {};
-const title = ["🕸️ https://ra101.github.io/cli/", "🕸️ ra101://cli"];
+const title = ["🖥️ https://ra101.github.io/console/", "🖥️ ra101://console"];
 let rootPath = 'ra101/users/127.0.0.1';
 
 const getDirectory = () => localStorage.directory;
