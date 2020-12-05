@@ -51,7 +51,7 @@ const registerMinimizedToggle = () => {
 
 const registerCross = () => {
   $('.button.red').click(() => {
-    $(location).attr('href', 'http://ra101.github.io');
+    window.open("", "_self").close();
   });
 };
 
@@ -180,7 +180,7 @@ commands.cat = (filename) => {
 commands.source_code = () => { window.open("https://github.com/ra101/" + location.href.split('/')[3], "_blank"); }
 
 //shutdown command
-commands.quit = commands.shutdown = commands.exit = () => { $(location).attr('href', 'http://ra101.github.io'); }
+commands.quit = commands.shutdown = commands.exit = () => { window.open("", "_self").close(); }
 
 //restart command
 commands.reboot = commands.restart = commands.reload = () => { location.reload(); }
