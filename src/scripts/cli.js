@@ -49,11 +49,28 @@ const registerMinimizedToggle = () => {
   });
 };
 
+function close_terminal() {
+  $('.terminal-window').toggleClass('closing');
+  $('.aftermath').toggleClass('closing');
+  return "<span class=pink-glow>(◕︵◕)/</span>"
+}
+
+
 const registerCross = () => {
-  $('.button.red').click(() => {
-    window.open("", "_self").close();
-  });
+  $('.button.red').click(close_terminal);
 };
+
+const registerExitOptions = () => {
+
+  $('#reload').click(() => {
+    location.reload();
+  });
+
+
+  $('#previous').click(() => {
+    location.href = "https://ra101.github.io/"
+  });
+}
 
 // noWriteAccess commands.
 commands.mkdir = () => errors.noWriteAccess;
@@ -85,8 +102,7 @@ commands.help = () => systemData.help;
 commands.all_commands = () => systemData.all_commands;
 
 // A simple Echo.
-commands.echo = (sampleText) => { return sampleText };
-commands.printf = commands.echo
+commands.printf = commands.echo = (sampleText) => { return sampleText };
 
 
 // Few additionals.
@@ -180,7 +196,7 @@ commands.cat = (filename) => {
 commands.source_code = () => { window.open("https://github.com/ra101/" + location.href.split('/')[3], "_blank"); }
 
 //shutdown command
-commands.quit = commands.shutdown = commands.exit = () => { window.open("", "_self").close(); }
+commands.quit = commands.shutdown = commands.exit = () => { return close_terminal(); }
 
 //restart command
 commands.reboot = commands.restart = commands.reload = () => { location.reload(); }
@@ -191,6 +207,7 @@ $(() => {
   registerFullscreenToggle();
   registerMinimizedToggle();
   registerCross();
+  registerExitOptions();
   const cmd = document.getElementById('terminal');
 
   $.ajaxSetup({ cache: false });

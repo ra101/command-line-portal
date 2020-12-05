@@ -89,23 +89,25 @@ class Shell {
         const input = prompt.textContent.trim().split(' ');
         const cmd = input[0].toLowerCase();
         const args = input[1];
-
         if (cmd === 'clear' || cmd === 'cls') {
           this.updateHistory(cmd);
           this.clearConsole();
-        } else if (cmd == 'cd..' && args == null) {
+        } else if (cmd === 'cd..' && args == null) {
           this.runCommand('cd', '..');
           this.resetPrompt(term, prompt);
           $('.root').last().html(localStorage.directory == "root" ? "~" : localStorage.directory);
-        }
-        else if (cmd && cmd in this.commands) {
+        } else if (cmd === 'echo' || cmd === 'printf') {
+          this.runCommand(cmd, input.slice(1, input.length).join(' '));
+          this.resetPrompt(term, prompt);
+        } else if (cmd === 'exit' || cmd === 'shutdown' || cmd === 'quit') {
+          this.runCommand(cmd, prompt);
+        } else if (cmd && cmd in this.commands) {
           this.runCommand(cmd, args);
           this.resetPrompt(term, prompt);
           $('.root').last().html(localStorage.directory == "root" ? "~" : localStorage.directory);
         } else if (input == '') {
           this.resetPrompt(term, prompt);
-        }
-        else {
+        } else {
           this.term.innerHTML += 'Error: command not recognized';
           this.resetPrompt(term, prompt);
         }

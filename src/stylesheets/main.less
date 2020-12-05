@@ -1,5 +1,30 @@
 @font-family: Menlo, Monaco, "Consolas", "Courier New", "Courier";
 
+.aftermath {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  position: absolute;
+  color:white;
+  top:25vh;
+  font-size: 3rem;
+  text-align: center;
+  width: 100vw;
+  text-shadow: 0px 0px 20px black;
+  opacity: 0;
+  display: none;
+  
+  &.closing {
+    display: block;
+    animation: fadeOut 2s ease-in 8s 1 reverse forwards;
+  }
+
+  span {
+    font-size: 5rem;
+    margin: 4rem;
+    cursor: pointer;
+    
+  }
+  
+}
 
 .terminal-window {
   text-align: left;
@@ -24,6 +49,10 @@
     height: 100%;
     top: 0;
     left: 0;
+  }
+
+  &.closing {
+    animation: fadeOut 0.25s ease-in 0.5s 1 normal forwards;
   }
 
   header {
@@ -125,6 +154,10 @@
     color: chartreuse;
     text-shadow: 0 0 4px green;
   }
+  .pink-glow {
+    color: pink;
+    text-shadow: 0 0 4px salmon;
+  }
 }
 
 .command_input {
@@ -201,5 +234,19 @@ div.number {
 @keyframes updown {
   50% {
     transform: translate(0, 4px);
+  }
+}
+
+
+@keyframes fadeOut {
+  0% {
+    opacity: 1;
+  }
+  99% {
+    opacity: 0;
+    z-index: 9999;
+  }
+  100%{
+    z-index: -9999;
   }
 }
