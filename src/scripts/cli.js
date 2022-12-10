@@ -37,11 +37,25 @@ function close_terminal() {
   $('#terminal').html(`
     <span class="bye">
     <span class="pink-glow">(◕︵◕)/</span>
-    <span class="root">CONNECTING TO https://ra101.dev/</span>
+    <span class="ping">CONNECTING TO https://ra101.dev/</span>
     </span>
+    <script>
+    let timeUntillPing = 701
+    let pingElement = $(".ping")[0]
+    let pingElementValue = pingElement.innerText
+    const intervalObject = setInterval(()=>{
+      if (timeUntillPing <= 0){
+        clearInterval(intervalObject)
+        window.open("https://ra101.github.io/", target="_self")
+      }
+      else {
+        timeUntillPing -= 1;
+        pingElement.innerText = pingElementValue + " ...IN " + timeUntillPing.toString().padStart(3, '0') + "ms"
+      }
+    }, 1);
+    </script>
   `)
 }
-
 // noWriteAccess commands.
 commands.mkdir = () => errors.noWriteAccess;
 commands.touch = () => errors.noWriteAccess;
@@ -163,7 +177,7 @@ commands.cat = (filename) => {
 };
 
 //source code
-commands.source_code = () => { window.open("https://github.com/ra101/" + location.href.split('/')[3], "_blank"); }
+commands.source_code = () => { window.open("https://github.com/ra101/console", "_blank"); }
 
 //shutdown command
 commands.quit = commands.shutdown = commands.exit = close_terminal;
