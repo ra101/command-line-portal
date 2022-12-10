@@ -138,12 +138,6 @@ div.number {
     -ms-user-select: none;
     user-select: none;
 }
-@media only screen and (max-width: 1000px) {
-    div#universe {
-        display: block;
-        background: radial-gradient(circle at center,#1d001d 0%,#0e000e 30%,#000000 70%);
-   }
-}
 @keyframes twinkle {
     50% {
         transform: scale(0.3);
