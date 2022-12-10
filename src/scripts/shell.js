@@ -18,39 +18,37 @@ class Shell {
     $('#terminal').mouseup(() => $('.input').last().focus());
 
     term.addEventListener('keyup', (evt) => {
-      const keyUp = 38;
-      const keyDown = 40;
+      const upKey = 38;
+      const downKey = 40;
       const key = evt.keyCode;
 
-      if ([keyUp, keyDown].includes(key)) {
+      if ([upKey, downKey].includes(key)) {
         let history = localStorage.history;
         history = history ? Object.values(JSON.parse(history)) : [];
 
-        if (key === keyUp) {
+        if (key === upKey) {
           if (localStorage.historyIndex >= 0) {
-            if (!localStorage.inHistory) {
+            if (localStorage.inHistory == 'false') {
               localStorage.inHistory = true;
-            } else {
-              // Prevent repetition of last command while traversing history.
-              if (localStorage.historyIndex === history.length - 1 && history.length !== 1) {
-                localStorage.historyIndex -= 1;
-              }
             }
+            // Prevent repetition of last command while traversing history.
+            if (localStorage.historyIndex == history.length - 1 && history.length !== 1) {
+              localStorage.historyIndex -= 1;
+            }
+            $('.input').last().html(`${history[localStorage.historyIndex]}<span class="end"><span>`);
+            if (localStorage.historyIndex != 0) localStorage.historyIndex -= 1;
           }
-
-          $('.input').last().html(`${history[localStorage.historyIndex]}<span class="end"><span>`);
-          if (localStorage.historyIndex !== 0) localStorage.historyIndex -= 1;
-        } else if (key === keyDown) {
-          if (localStorage.inHistory && localStorage.historyIndex < history.length) {
+        } else if (key === downKey) {
+          if (localStorage.inHistory == 'true' && localStorage.historyIndex < history.length) {
             let ret;
 
             if (localStorage.historyIndex > 0) {
               ret = `${history[localStorage.historyIndex]}<span class="end"><span>`;
-              if (localStorage.historyIndex !== history.length - 1) {
+              if (localStorage.historyIndex != history.length - 1) {
                 localStorage.historyIndex = Number(localStorage.historyIndex) + 1;
               }
               // Prevent repetition of first command while traversing history.
-            } else if (localStorage.historyIndex === 0 && history.length > 1) {
+            } else if (localStorage.historyIndex == 0 && history.length > 1) {
               ret = `${history[1]}<span class="end"><span>`;
               localStorage.historyIndex = history.length !== 2 ? 2 : 1;
             }
@@ -133,7 +131,6 @@ class Shell {
     if (this.prompt) {
       newPrompt.querySelector('.prompt').textContent = this.prompt;
     }
-    console.log(term)
 
     term.appendChild(newPrompt);
     newPrompt.querySelector('.input').innerHTML = '';

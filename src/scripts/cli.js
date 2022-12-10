@@ -46,6 +46,7 @@ function close_terminal() {
     const intervalObject = setInterval(()=>{
       if (timeUntillPing <= 0){
         clearInterval(intervalObject)
+        window.close()
         window.open("https://ra101.github.io/", target="_self")
       }
       else {
@@ -67,7 +68,6 @@ commands.chmod = () => errors.noWriteAccess;
 commands.chown = () => errors.noWriteAccess;
 
 commands.ls = (directory) => {
-  console.log(systemData);
   if (directory === '..' || directory === '~') {
     return systemData['root'];
   }
