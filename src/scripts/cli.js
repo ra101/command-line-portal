@@ -24,7 +24,7 @@ const struct = {
 
 const commands = {};
 let systemData = {};
-const title = ["🖥️ https://ra101.github.io/console/", "🖥️ ra101://console"];
+const title = ["🖥️ https://ra101.dev/console/", "🖥️ ra101://console"];
 let rootPath = 'ra101/users/127.0.0.1';
 
 const getDirectory = () => localStorage.directory;
@@ -32,44 +32,14 @@ const setDirectory = (dir) => {
   localStorage.directory = dir;
 };
 
-// Turn on fullscreen.
-const registerFullscreenToggle = () => {
-  $('.button.green').click(() => {
-    $('.terminal-window').removeClass('minimized');
-    $('.terminal-window').toggleClass('fullscreen');
-    $('.terminal-title').html(title[0])
-  });
-};
-const registerMinimizedToggle = () => {
-  $('.button.yellow').click(() => {
-    $('.terminal-window').removeClass('fullscreen');
-    $('.terminal-window').toggleClass('minimized');
-    let flag = $('.terminal-window').hasClass('minimized') ? 1 : 0;;
-    $('.terminal-title').html(title[flag]);
-  });
-};
-
 function close_terminal() {
-  $('.terminal-window').toggleClass('closing');
-  $('.aftermath').toggleClass('closing');
-  return "<span class=pink-glow>(◕︵◕)/</span>"
-}
-
-
-const registerCross = () => {
-  $('.button.red').click(close_terminal);
-};
-
-const registerExitOptions = () => {
-
-  $('#reload').click(() => {
-    location.reload();
-  });
-
-
-  $('#previous').click(() => {
-    location.href = "https://ra101.github.io/"
-  });
+  $('#terminal').toggleClass('closing');
+  $('#terminal').html(`
+    <span class="bye">
+    <span class="pink-glow">(◕︵◕)/</span>
+    <span class="root">CONNECTING TO https://ra101.dev/</span>
+    </span>
+  `)
 }
 
 // noWriteAccess commands.
@@ -196,7 +166,7 @@ commands.cat = (filename) => {
 commands.source_code = () => { window.open("https://github.com/ra101/" + location.href.split('/')[3], "_blank"); }
 
 //shutdown command
-commands.quit = commands.shutdown = commands.exit = () => { return close_terminal(); }
+commands.quit = commands.shutdown = commands.exit = close_terminal;
 
 //restart command
 commands.reboot = commands.restart = commands.reload = () => { location.reload(); }
@@ -204,10 +174,6 @@ commands.reboot = commands.restart = commands.reload = () => { location.reload()
 
 // Initialize cli.
 $(() => {
-  registerFullscreenToggle();
-  registerMinimizedToggle();
-  registerCross();
-  registerExitOptions();
   const cmd = document.getElementById('terminal');
 
   $.ajaxSetup({ cache: false });

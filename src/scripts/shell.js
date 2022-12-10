@@ -65,14 +65,11 @@ class Shell {
     term.addEventListener('keydown', (evt) => {
       // Keydown legend:
       // 9 -> Tab key.
-      // 27 -> Escape key.
       // 8 -> Backspace key.
       // 46 -> Delete key.
 
       if (evt.keyCode === 9) {
         evt.preventDefault();
-      } else if (evt.keyCode === 27) {
-        $('.terminal-window').toggleClass('fullscreen');
       } else if (evt.keyCode === 8 || evt.keyCode === 46) {
         this.resetHistoryIndex();
       }
@@ -99,7 +96,7 @@ class Shell {
         } else if (cmd === 'echo' || cmd === 'printf') {
           this.runCommand(cmd, input.slice(1, input.length).join(' '));
           this.resetPrompt(term, prompt);
-        } else if (cmd === 'exit' || cmd === 'shutdown' || cmd === 'quit') {
+        } else if (['exit', 'shutdown', 'quit'].includes(cmd)) {
           this.runCommand(cmd, prompt);
         } else if (cmd && cmd in this.commands) {
           this.runCommand(cmd, args);
@@ -172,13 +169,15 @@ class Shell {
     const dir = getDirectory() == "root" ? "~" : getDirectory();
 
     $('#terminal').html(
-      `<p class="hidden">
+      `
+      <p> <span class="green-glow">(ᵔᵕᵔ)/</span> - WELCOME TO <span class="root">〈 RA 〉's Console</span>! TYPE \`<span class="tick">help</span>\` TO GET STARTED. </p>
+      <p class="hidden">
           <span class="prompt">
             <span class="root">${dir}</span>
             <span class="tick">$</span>
           </span>
           <span contenteditable="true" class="input"></span>
-        </p>`,
+      </p>`,
     );
 
     $('.input').focus();

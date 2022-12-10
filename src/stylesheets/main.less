@@ -1,40 +1,28 @@
-@font-family: Menlo, Monaco, "Consolas", "Courier New", "Courier";
-
-.aftermath {
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  position: absolute;
-  color:white;
-  top:25vh;
-  font-size: 3rem;
-  text-align: center;
-  width: 100vw;
-  text-shadow: 0px 0px 20px black;
-  opacity: 0;
-  display: none;
-  
-  &.closing {
-    display: block;
-    animation: fadeOut 2s ease-in 8s 1 reverse forwards;
-  }
-
-  span {
-    font-size: 5rem;
-    margin: 4rem;
-    cursor: pointer;
-    
-  }
-  
+@font-face {
+  font-family: oxygen mono;
+  font-style: normal;
+  font-weight: 400;
+  src: url(../fonts/oxygen-mono-v7-latin-ext_latin-regular.eot);
+  src: local("Oxygen Mono"), local("OxygenMono-Regular"), url(../fonts/oxygen-mono-v7-latin-ext_latin-regular.eot?#iefix) format("embedded-opentype"), url(../fonts/oxygen-mono-v7-latin-ext_latin-regular.woff2) format("woff2"),
+      url(../fonts/oxygen-mono-v7-latin-ext_latin-regular.woff) format("woff"), url(../fonts/oxygen-mono-v7-latin-ext_latin-regular.ttf) format("truetype"), url(../fonts/oxygen-mono-v7-latin-ext_latin-regular.svg#OxygenMono) format("svg");
 }
 
-.terminal-window {
-  text-align: left;
-  width: 600px;
-  height: 360px;
-  border-radius: 10px;
+#terminal {
+  color: #80ff80cc;
+  width:.75em;
+  font-family: oxygen mono,monospace;
+  font-size: 22px;
+  text-shadow: 0 0 1px #33ff3333, 0 0 2px #ffffffdd;
+  padding: 10px;
+  box-sizing: border-box;
   position: absolute;
+  overflow: auto;
+  width: 100%;
+  height: 100%;
+  border-radius: 10px;
   display: block;
-  top: 20vh;
-  left: ~"calc(50vw - 300px)";
+  top: 0;
+  left: 0;
   transition: all 0.25s ease;
 
   &.minimized {
@@ -51,69 +39,28 @@
     left: 0;
   }
 
-  &.closing {
-    animation: fadeOut 0.25s ease-in 0.5s 1 normal forwards;
-  }
+ &.closing {
+  animation: fadeIn .5s ease-in forwards;
 
-  header {
-    background: dimgrey;
-    height: 30px;
-    border-radius: 8px 8px 0 0;
-    padding-left: 10px;
-    text-align: right;
+  .bye {
+    display: grid;
+    width:100%; height: 100%;
+    justify-items: center;align-items: end;
 
-    .terminal-title {
-      float: left;
-      margin: 4px 2px 0 0;      
-      color: #e8e8e8;
-      font-weight: lighter;
-      font-family: @font-family;
-      font-size: 12pt;  
+    .pink-glow {
+      display: inline-grid;
+      font-size: xx-large;
     }
 
-    .button {
-      width: 12px;
-      height: 12px;
-      margin: 10px 5px 0 0;
-      display: inline-block;
-      border-radius: 50%;
-      cursor: pointer;
-    }
-
-    .button.green {
-      background: chartreuse;
-    }
-
-    .button.yellow {
-      background: gold;
-    }
-
-    .button.red {
-      background: red;
+    .root {
+      margin-bottom: 10px;
+      display: inline-grid;
+      font-size:smaller;
     }
   }
 
-  #terminal {
-    color: white;
-    font-family: @font-family;
-    font-size: 11pt;
-    background: #121212ab;
-    padding: 10px;
-    box-sizing: border-box;
-    position: absolute;
-    width: 100%;
-    top: 30px;
-    bottom: 0;
-    overflow: auto;
-  }
+ }
 
-  .contact {
-    list-style: none;
-    text-align: center;
-    li {
-      padding: 2px;
-    }
-  }
 
   h4 {
     text-align: center;
@@ -125,22 +72,32 @@
   }
 
   .input {
-    outline-color:  #30353a;
-    border:         none;
-    display:        inline-block;
+    border: none;
+    display: inline-block;
+  }
+
+  .input::selection{
+    background-color: #11581Eab;
+  }
+
+  .input:focus-visible {
+    outline: none;
   }
 
   .root {
-    color: #25e21f;
+    color: white;
   }
 
   .tick {
     color: #EC4891;
+    text-shadow: 0 0 1px #ff339933, 0 0 2px #ffffffdd;
   }
 
   .blue {
-    color: deepskyblue;
+    color: skyblue;
+    text-shadow: 0 0 1px #3333ff33, 0 0 2px #ffffffdd;
   }
+  a.blue {text-underline-offset: 5px;}
 
   .gray {
     color: gray;
@@ -148,7 +105,8 @@
 
   .dir {
     color: dodgerblue;
-    }
+    text-shadow: 0 0 1px #3333ff33, 0 0 2px #ffffffdd;
+  }
 
   .green-glow {
     color: chartreuse;
@@ -238,15 +196,11 @@ div.number {
 }
 
 
-@keyframes fadeOut {
+@keyframes fadeIn {
   0% {
-    opacity: 1;
-  }
-  99% {
     opacity: 0;
-    z-index: 9999;
   }
-  100%{
-    z-index: -9999;
+  100% {
+    opacity: 1;
   }
 }
