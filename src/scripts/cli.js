@@ -19,7 +19,7 @@ const errors = {
 
 const struct = {
   root: ['about', 'resume', 'contact'],
-  skills: ['languages', 'frameworks', 'databases', 'tools', 'others'],
+  skills: ['languages', 'frameworks', 'databases', 'tools'],
 };
 
 const commands = {};
@@ -191,7 +191,6 @@ $(() => {
   pages.push($.get('src/pages/frameworks.html'));
   pages.push($.get('src/pages/databases.html'));
   pages.push($.get('src/pages/tools.html'));
-  pages.push($.get('src/pages/others.html'));
   $.when
     .apply($, pages)
     .done(
@@ -209,7 +208,6 @@ $(() => {
         frameworksData,
         databasesData,
         toolsData,
-        othersData,
       ) => {
         systemData['about'] = aboutData[0];
         systemData['contact'] = contactData[0];
@@ -224,7 +222,6 @@ $(() => {
         systemData['frameworks'] = frameworksData[0];
         systemData['databases'] = databasesData[0];
         systemData['tools'] = toolsData[0];
-        systemData['others'] = othersData[0];
       },
     );
 
